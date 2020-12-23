@@ -10,10 +10,10 @@ export const userAuth = (values, isSignIn) => async (dispatch) => {
         returnSecureToken: true
     }
 
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBsVEprmFn_Q_fTx-aiFZ0yVpygE_6u-IQ'
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`
 
     if (isSignIn) {
-        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBsVEprmFn_Q_fTx-aiFZ0yVpygE_6u-IQ'
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`
     }
 
     const { data } = await axios.post(url, authData);
