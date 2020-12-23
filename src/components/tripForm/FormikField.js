@@ -3,20 +3,25 @@ import TextField from '@material-ui/core/TextField';
 import {Field} from 'formik'
 
 
-function FormikField({name, label, type, helperText, className}) {
-    // console.log(className);
+function FormikField({name, 
+                      label, 
+                      type, 
+                      helperText, 
+                      className, 
+                      fullWidth}) {
+
+
     return (
-        <div style={{display: "inline-block"}}>
-            <Field 
-                as={TextField}
-                variant="outlined"
-                label={label}
-                name={name}
-                type={type || null}
-                helperText={helperText || null}
-                className={className}
-            />
-        </div>
+        <Field 
+            as={TextField}
+            fullWidth={fullWidth}
+            variant="outlined"
+            label={label}
+            name={name}
+            type={type}
+            helperText={helperText}
+            className={className}
+        />
     )
 }
 

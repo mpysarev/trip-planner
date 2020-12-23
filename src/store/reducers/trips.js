@@ -1,16 +1,30 @@
-import {SAVE_TRIP} from '../actions/trips'
+import {ADD_TRIP, UPDATE_TRIP, SET_TRIPS_LIST, DELETE_TRIP} from '../actions/trips'
 
 const initialState = {
     list: [],
-    selectedTrip: getEmptyTrip(),
+    emptyTrip: getEmptyTrip(),
 }
 
 
-export default function reducer(state = initialState, {type, payload}) {
+export default function trips(state = initialState, {type, payload}) {
+
+    // console.log(payload);
     switch(type) {
-        case SAVE_TRIP: return {
+        case ADD_TRIP: return {
             ...state,
             list: [...state.list, payload]
+        }
+        case UPDATE_TRIP: return {
+            ...state,
+            list: state.list.map((trip) => trip.id === payload.id ? payload : trip)
+        }
+        case DELETE_TRIP: return {
+            ...state,
+            list: state.list.filter((trip) => trip.id !== payload),
+        }
+        case SET_TRIPS_LIST: return {
+            ...state,
+            list: payload
         }
 
         default: return state

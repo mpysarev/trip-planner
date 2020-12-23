@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux'
 import trips from './trips'
-import tripsForm from './tripsForm'
+import tripSummary from './tripSummary'
+import auth from './auth'
 
 export default combineReducers({
     trips,
-    tripsForm
+    tripSummary,
+    auth
 })

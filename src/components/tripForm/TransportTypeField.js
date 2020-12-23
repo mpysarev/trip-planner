@@ -27,7 +27,10 @@ function TransportTypeField({name, label}) {
                                         <FormikField name={`${name}[${index}]`} label={label}/>
                                         
                                         <AddIcon type="button" onClick={() => push('')} />
-                                        {index > 0 && name === 'transportation.type' ? <DeleteIcon type="button" onClick={() => remove(index)} /> : null}
+                                        {index > 0 && name === 'transportation.type' 
+                                            ? <DeleteIcon type="button" onClick={() => remove(index)} /> 
+                                            : null
+                                        }
                                         
                                     </div>
                                 ))}

@@ -19,17 +19,17 @@ function ExtraExpensesCostField({name, label, className}) {
 
                         return (
                             
-                            <div>
+                            <>
                                 {extraExpenses.cost.map((transport, index) => (
-                                    <div key={index}>
-                                        <FormikField name={`${name}[${index}]`} label={label} className={className}/>
-                                        
-                                        <AddIcon type="button" onClick={() => push('')} />
+                                    <div key={index} style={{display: 'flex', justifyContent: 'flex-end'}}>
                                         {index > 0 && name === 'extraExpenses.cost' ? <DeleteIcon type="button" onClick={() => remove(index)} /> : null}
+                                        <AddIcon type="button" onClick={() => push('')} />
+                                        
+                                        <FormikField name={`${name}[${index}]`} label={label} className={className}/>
                                         
                                     </div>
                                 ))}
-                            </div>
+                            </>
                         )
                     }
                 }

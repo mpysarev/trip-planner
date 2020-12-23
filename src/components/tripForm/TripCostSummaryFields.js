@@ -2,28 +2,21 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField';
 import { useFormikContext } from 'formik';
 import { connect } from 'react-redux';
-import {setTripLength, setTripCost} from '../../store/actions/tripsForm'
+import {setTripLength, setTripCost} from '../../store/actions/tripSummary'
 
 
 
-function FormikTextField({setTripLength, setTripCost, className}) {
+function TripCostSummary({setTripLength, setTripCost, className}) {
     
     
-    const {
-        values,
-        // handleChange,
-        // handleBlur,
-        // touched,
-        // errors
-    } = useFormikContext();
+    const { values } = useFormikContext();
 
     const {dates: {start}, dates: {end}} = values;
     const {housing, 
            meals, 
            transportation, 
            extraExpenses} = values;
-
-    // console.log(transportation, extraExpenses);
+           
 
     const tripLength = getLength();
     const tripCost = getCost()
@@ -44,18 +37,15 @@ function FormikTextField({setTripLength, setTripCost, className}) {
         const tCost = transportation.cost.reduce((acc, num) => acc + +num, 0);
         const eCost = extraExpenses.cost.reduce((acc, num) => acc + +num, 0);
 
-        // console.log(tCost, eCost);
-
-
         return (housing.cost*tripLength) + (meals.cost*tripLength) + tCost + eCost;
     }
 
-    // setTripLength(tripLength)
-    // setTripCost(tripCost)
+    setTripLength(tripLength)
+    setTripCost(tripCost)
 
 
     return (
-        <>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <TextField
             variant="outlined"
             value={tripLength}
@@ -68,7 +58,7 @@ function FormikTextField({setTripLength, setTripCost, className}) {
             label="Total cost / $"
             className={className}
         />
-        </>
+        </div>
     )
 }
 
@@ -77,4 +67,4 @@ const mapDispatchToProps = {
     setTripCost
 }
 
-export default connect(null, mapDispatchToProps)(FormikTextField)
+export default connect(null, mapDispatchToProps)(TripCostSummary)

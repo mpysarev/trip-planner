@@ -19,17 +19,18 @@ function TransportCostField({name, label, className}) {
 
                         return (
                             
-                            <div>
+                            <>
                                 {transportation.cost.map((transport, index) => (
-                                    <div key={index}>
+                                    <div key={index} style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                        {index > 0 && name === 'transportation.cost' ? <DeleteIcon type="button" onClick={() => remove(index)} /> : null}
+                                        <AddIcon type="button" onClick={() => push('')} />
+                                        
                                         <FormikField name={`${name}[${index}]`} label={label} className={className}/>
                                         
-                                        <AddIcon type="button" onClick={() => push('')} />
-                                        {index > 0 && name === 'transportation.cost' ? <DeleteIcon type="button" onClick={() => remove(index)} /> : null}
                                         
                                     </div>
                                 ))}
-                            </div>
+                            </>
                         )
                     }
                 }

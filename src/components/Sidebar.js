@@ -1,33 +1,36 @@
 import React from 'react';
-// import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-// import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import TripsList from './tripsList/TripsList'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {Link} from 'react-router-dom'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
-const drawerHeight = 150;
+
+const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
     toolbarIcon: {
-        display: 'inline-block',
-        // flexDirection: 'column',
-        // alignItems: 'center',
-        // justifyContent: 'flex-end',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
         padding: '0 8px'
     },
     drawerPaper: {
         position: 'relative',
-        height: drawerHeight,
+        width: drawerWidth,
+        whiteSpace: 'nowrap',
         backgroundColor: 'white',
         zIndex: 100,
-        transition: theme.transitions.create('height', {
+        transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         })
     },
     drawerPaperClose: {
-        overflowY: 'hidden',
-        height: 0,
-        transition: theme.transitions.create('height', {
+        overflowX: 'hidden',
+        width: 0,
+        transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         })
@@ -46,16 +49,18 @@ function Sidebar({sidebarOpened, toggleSidebar}) {
                 paper: `${classes.drawerPaper} ${
                     !sidebarOpened ? classes.drawerPaperClose : null
                 }`
-        }}
+            }}
         >
-            {/* <div className={classes.toolbarIcon}>
+            <div className={classes.toolbarIcon}>
                 <IconButton onClick={toggleSidebar}>
-                    <ArrowUpwardIcon />
+                    <ArrowBackIcon />
                 </IconButton>
-            </div> */}
-            <div styles={{overflow: 'auto'}}>
-                <TripsList />
             </div>
+            <List>
+                <ListItem component={Link} to="/trips">
+                    My trips
+                </ListItem>
+            </List>
         </Drawer>
     )
 }

@@ -1,4 +1,4 @@
-import {SET_TRIP_LENGTH, SET_TRIP_COST} from '../actions/tripsForm'
+import {SET_TRIP_LENGTH, SET_TRIP_COST} from '../actions/tripSummary'
 
 
 const initialState = {

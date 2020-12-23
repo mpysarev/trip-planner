@@ -1,60 +1,62 @@
-import React, {useState} from 'react';
+import React, { useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Header from './components/Header';
+import Header from './components/header/Header';
 import TripForm from './components/tripForm/TripForm';
-import Sidebar from './components/Sidebar';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import {fetchTripsList} from './store/actions/trips'
+import {autoLogin} from './store/actions/auth'
 
 import {BrowserRouter as Router,
         Redirect,
         Route,
         Switch
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+import TripsList from './components/tripsList/TripsList';
+import Location from './components/location/Location'
+import Auth from './components/auth/Auth';
 
 const useStyles = makeStyles((theme) => ({
-  bg: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      zIndex: 10
-  }
+  root: {
+    display: 'flex',
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+    backgroundColor: '#36669d',
+    backgroundImage: `linear-gradient(315deg, #36669d 0%, #d3d3d3 74%)`
+},
 }))
 
-function App() {
+function App({fetchTripsList, autoLogin}) {
 
-  const [sidebarOpened, setSidebarOpened] = useState(false);
   const classes = useStyles();
 
-  const toggleSidebar = () => setSidebarOpened(!sidebarOpened);
+  useEffect(() => {
+    fetchTripsList()
+  }, [fetchTripsList])
 
+  useEffect(() => {
+    autoLogin()
+  }, [autoLogin])
 
   return (
     <Router>
       <CssBaseline />
-      <div>
-        <Header 
-          sidebarOpened={sidebarOpened} 
-          toggleSidebar={toggleSidebar}        
-        />
+      <div className={classes.root}>
+        <Header />
 
-        <Sidebar
-          sidebarOpened={sidebarOpened} 
-          toggleSidebar={toggleSidebar}
-        />
-
-        <div 
-          onClick={toggleSidebar}
-          className={sidebarOpened ? classes.bg : null}
-        ></div>
-
-        <main>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
           <Switch>
             <Route path="/form/:id" component={TripForm} />
+            <Route path="/trips" component={TripsList} />
+            <Route path="/auth" component={Auth} />
+            <Route path="/location" component={Location} />
             <Route path="*">
-              <Redirect to="/form/new" />
+              <Redirect to="/trips" />
             </Route>
           </Switch>
         </main>
@@ -63,4 +65,10 @@ function App() {
   )
 }
 
-export default App
+
+const mapDispatchToProps = {
+  fetchTripsList,
+  autoLogin
+}
+
+export default connect(null, mapDispatchToProps)(App)

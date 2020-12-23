@@ -2,27 +2,25 @@ import React from 'react'
 import List from '@material-ui/core/List';
 import { connect } from 'react-redux'
 import TripsListItem from './TripsListItem'
+import Loader from '../loader/Loader'
 
-function TripsList({trips, tripsForm}) {
-    // console.log(trips, tripsForm)
+function TripsList({list}) {
+    console.log(list)
     return (
         <List>
-            {trips.list.map((trip) => 
+            {list.length > 0 ? list.map((trip) => 
                 <TripsListItem 
                     trip={trip}
                     key={trip.id}
-                />) 
+                />) : <Loader />
             }
         </List>
     )
 }
 
-function mapStateToProps ({trips, tripsForm}) {
-    return {trips, tripsForm}
+function mapStateToProps ({trips: {list}}) {
+    return { list }
 }
 
-const mapDispatchToProps = {
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TripsList)
+export default connect(mapStateToProps)(TripsList)
