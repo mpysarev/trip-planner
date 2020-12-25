@@ -41,7 +41,7 @@ function Header({isSignedIn, signOut}) {
                     component={NavLink}
                     to="/trips"
                 >
-                    My trips
+                    Test
                 </Button>
                 <Button
                     color="inherit"
@@ -49,7 +49,7 @@ function Header({isSignedIn, signOut}) {
                     component={NavLink}
                     to="/location"
                 >
-                    Location
+                    Test
                 </Button>
                 {isSignedIn 
                     ? <Button
