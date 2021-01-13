@@ -30,17 +30,23 @@ const useStyles = makeStyles((theme) => ({
 },
 }))
 
-function App({fetchTripsList, autoLogin}) {
+function App({fetchTripsList, autoLogin, userId}) {
 
   const classes = useStyles();
 
+  // const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('token');
+  console.log('user id', userId);
+  // console.log('token', token);
+
   useEffect(() => {
-    fetchTripsList()
-  }, [fetchTripsList])
+    fetchTripsList(userId)
+  }, [userId, fetchTripsList])
 
   useEffect(() => {
     autoLogin()
   }, [autoLogin])
+
 
   return (
     <Router>
@@ -65,10 +71,15 @@ function App({fetchTripsList, autoLogin}) {
   )
 }
 
+function mapStateToProps({auth: {userId}}) {
+
+  return {userId}
+}
+
 
 const mapDispatchToProps = {
   fetchTripsList,
   autoLogin
 }
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

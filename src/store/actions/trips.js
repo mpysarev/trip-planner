@@ -1,9 +1,10 @@
 import api from '../../axiosApi/tripsService'
 
-export const fetchTripsList = () => async (dispatch) => {
+export const fetchTripsList = (userId) => async (dispatch) => {
 
     try {
-        const { data } = await api.get('/trips.json')
+        const { data } = await api.get(`/users/${userId}.json`)
+        console.log(data);
         const payload = Object.keys(data).map((key) => {
             return {
                 ...data[key],
@@ -17,27 +18,28 @@ export const fetchTripsList = () => async (dispatch) => {
 }
 
 export const SET_TRIPS_LIST = 'SET_TRIPS_LIST';
-const setTripsList = (payload) => ({
+export const setTripsList = (payload) => ({
     type: SET_TRIPS_LIST,
     payload
 })
 
 
-export const saveTrip = (trip, length, cost) => (dispatch) => {
+export const saveTrip = (trip, length, cost, userId) => (dispatch) => {
     console.log('save action', trip);
     return trip.id
-        ? updateTrip(trip, dispatch, length, cost)
-        : addTrip(trip, dispatch, length, cost)
+        ? updateTrip(trip, dispatch, length, cost, userId)
+        : addTrip(trip, dispatch, length, cost, userId)
 }
 
 export const ADD_TRIP = 'ADD_TRIP';
-const addTrip = async (trip, dispatch, length, cost,) => {
+const addTrip = async (trip, dispatch, length, cost, userId) => {
     trip.tripLength = length;
     trip.tripCost = cost;
     console.log(trip);
 
     try {
-        const {data} = await api.post('/trips.json', trip)
+        const {data} = await api.post(`/users/${userId}.json`, trip)
+        console.log(data);
         const payload = {
             ...trip,
             id: data.name
@@ -55,7 +57,7 @@ const addTrip = async (trip, dispatch, length, cost,) => {
 }
 
 export const UPDATE_TRIP = 'UPDATE_TRIP';
-const updateTrip = async (trip, dispatch, length, cost, ) => {
+const updateTrip = async (trip, dispatch, length, cost, userId) => {
     trip.tripLength = length;
     trip.tripCost = cost;
     try {

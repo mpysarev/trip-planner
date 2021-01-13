@@ -47,10 +47,12 @@ const initialValues = {
 
 
 
-function Auth({userAuth}) {
+function Auth({userAuth, auth}) {
 
     const classes = useStyles();
     const history = useHistory()
+
+    console.log(auth);
 
 
     const onSubmit = (values, {resetForm}) => {
@@ -131,6 +133,7 @@ function Auth({userAuth}) {
                                                     type="button"
                                                     color="primary"
                                                     onClick={() => handleSignUp(formik)}
+                                                    disabled={!formik.isValid}
                                                 >Sign Up
                                                 </Button>
                                             </Typography>

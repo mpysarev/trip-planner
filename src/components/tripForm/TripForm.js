@@ -56,16 +56,27 @@ function TripForm({trip,
                    tripLength, 
                    tripCost, 
                    saveTrip, 
-                   deleteTrip}) {
+                   deleteTrip,
+                //    userId
+                   }) {
 
     
     const classes = useStyles();
     const history = useHistory();
 
+    // console.log('user Id', userId);
+
     
     const onSubmit = (values) => {
+        // const userId = localStorage.getItem('userId');
+        // const token = localStorage.getItem('token');
+        // console.log(userId);
+        // console.log(token);
+        const userId = localStorage.getItem('userId');
+        console.log('user Id', userId);
+
         console.log('Form submitted', tripLength, tripCost)
-        saveTrip(values, tripLength, tripCost);
+        saveTrip(values, tripLength, tripCost, userId);
         history.push('/trips')
     }
 
@@ -191,7 +202,7 @@ function TripForm({trip,
                                             />
                                         </Grid>
                                         <Grid item xs={5}>
-                                            <TripCostSummaryFields className={classes.summaryField}/>
+                                            {/* <TripCostSummaryFields className={classes.summaryField}/> */}
                                         </Grid>
     
                                     </Grid>
@@ -231,10 +242,9 @@ function TripForm({trip,
 }
 
 function mapStateToProps({trips: {list, emptyTrip}, 
-                          tripSummary: {tripLength, tripCost}}, 
+                          tripSummary: {tripLength, tripCost}},
                           {match: {params}}) {
 
-    // console.log(tripLength, tripCost);
     let trip = list.find((item) => item.id === params.id)
 
     trip = trip || emptyTrip;

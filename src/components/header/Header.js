@@ -11,6 +11,7 @@ import SignIn from '@material-ui/icons/Fingerprint';
 import { connect } from 'react-redux';
 import SignOut from '@material-ui/icons/ExitToApp';
 import { signOut } from '../../store/actions/auth'
+import { setTripsList } from '../../store/actions/trips'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-function Header({isSignedIn, signOut}) {
+function Header({isSignedIn, signOut, setTripsList}) {
 
     const classes = useStyles();
     const history = useHistory()
@@ -28,6 +29,7 @@ function Header({isSignedIn, signOut}) {
 
     function onSignOutClick() {
         signOut();
+        setTripsList([])
         history.push('/auth')
     }
 
@@ -41,7 +43,7 @@ function Header({isSignedIn, signOut}) {
                     component={NavLink}
                     to="/trips"
                 >
-                    Test
+                    My trips
                 </Button>
                 <Button
                     color="inherit"
@@ -49,7 +51,7 @@ function Header({isSignedIn, signOut}) {
                     component={NavLink}
                     to="/location"
                 >
-                    Test
+                    Location
                 </Button>
                 {isSignedIn 
                     ? <Button
@@ -84,11 +86,12 @@ function Header({isSignedIn, signOut}) {
 function mapStateToProps({auth}) {
 
     return {
-        isSignedIn: !!auth.token 
+        isSignedIn: !!auth.token,
     }
 }
 const mapDispatchToProps = {
-    signOut
+    signOut,
+    setTripsList
 }
 
 export default withRouter(

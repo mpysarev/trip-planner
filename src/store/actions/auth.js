@@ -1,9 +1,9 @@
 import axios from 'axios'
+import api from '../../axiosApi/tripsService'
 
 
 export const AUTH_ACTION = 'AUTH_ACTION'
 export const userAuth = (values, isSignIn) => async (dispatch) => {
-    console.log('Auth action', values);
 
     const authData = {
         ...values,
@@ -19,18 +19,29 @@ export const userAuth = (values, isSignIn) => async (dispatch) => {
     const { data } = await axios.post(url, authData);
     console.log(data);
 
-    const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+    const cont = {
+        userId: data.localId
+    }
 
+    if(!isSignIn) {
+        console.log('posting user to DB');
+        api.post(`/users/${data.localId}.json`, cont);
+    }
+
+    
+    const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+    
     localStorage.setItem('token', data.idToken);
     localStorage.setItem('userId', data.localId);
     localStorage.setItem('expirationDate', expirationDate);
-
+    
     dispatch({
         type: AUTH_ACTION,
-        payload: data.idToken
+        payload: data
     })
-
+    
     autoSignOut(data.expiresIn);
+    
 }
 
 const autoSignOut = (time) => {
@@ -51,10 +62,12 @@ export const signOut = () => (dispatch) => {
     dispatch({
         type: AUTH_SIGNOUT
     })
+
 }
 
 export const autoLogin = () => (dispatch) => {
     const token = localStorage.getItem('token');
+    // console.log(token);
 
     if(!token) {
         signOut();
@@ -65,7 +78,7 @@ export const autoLogin = () => (dispatch) => {
         } else {
             dispatch({
                 type: AUTH_ACTION,
-                payload: token
+                payload: {idToken: token}
             })
             autoSignOut((expirationDate.getTime() - new Date().getTime()) / 1000)
         }
