@@ -52,7 +52,7 @@ function Auth({userAuth, auth}) {
     const classes = useStyles();
     const history = useHistory()
 
-    console.log(auth);
+    // console.log(auth);
 
 
     const onSubmit = (values, {resetForm}) => {
@@ -151,7 +151,6 @@ function Auth({userAuth, auth}) {
 }
 
 function mapStateToProps({auth}) {
-    console.log(auth);
 
     return {auth};
 }

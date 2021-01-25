@@ -4,7 +4,7 @@ export const fetchTripsList = (userId) => async (dispatch) => {
 
     try {
         const { data } = await api.get(`/users/${userId}.json`)
-        console.log(data);
+        console.log('Fetching data', data);
         const payload = Object.keys(data).map((key) => {
             return {
                 ...data[key],
@@ -25,7 +25,6 @@ export const setTripsList = (payload) => ({
 
 
 export const saveTrip = (trip, length, cost, userId) => (dispatch) => {
-    console.log('save action', trip);
     return trip.id
         ? updateTrip(trip, dispatch, length, cost, userId)
         : addTrip(trip, dispatch, length, cost, userId)
@@ -33,9 +32,9 @@ export const saveTrip = (trip, length, cost, userId) => (dispatch) => {
 
 export const ADD_TRIP = 'ADD_TRIP';
 const addTrip = async (trip, dispatch, length, cost, userId) => {
+    
     trip.tripLength = length;
     trip.tripCost = cost;
-    console.log(trip);
 
     try {
         const {data} = await api.post(`/users/${userId}.json`, trip)
@@ -61,7 +60,7 @@ const updateTrip = async (trip, dispatch, length, cost, userId) => {
     trip.tripLength = length;
     trip.tripCost = cost;
     try {
-        const { data } = await api.put(`/trips/${trip.id}.json`, trip);
+        const { data } = await api.put(`/users/${userId}/${trip.id}.json`, trip);
 
         dispatch({
             type: UPDATE_TRIP,
@@ -74,9 +73,9 @@ const updateTrip = async (trip, dispatch, length, cost, userId) => {
 }
 
 export const DELETE_TRIP = 'DELETE_TRIP';
-export const deleteTrip = (id) => async (dispatch) => {
+export const deleteTrip = (id, userId) => async (dispatch) => {
     try {
-        await api.delete(`/trips/${id}.json`);
+        await api.delete(`/users/${userId}/${id}.json`);
     } catch (err) {
         console.log('Trip delete Failure', err);
     }

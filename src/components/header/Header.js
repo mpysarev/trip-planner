@@ -69,15 +69,18 @@ function Header({isSignedIn, signOut, setTripsList}) {
                     </Button>
                 }
                 
-                <Button
-                    color="inherit"
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    component={Link}
-                    to="/form/new"
-                >
-                    New trip
-                </Button>
+                {isSignedIn ? 
+                    <Button
+                        color="inherit"
+                        variant="outlined"
+                        startIcon={<AddIcon />}
+                        component={Link}
+                        to="/form/new"
+                    >
+                        New trip
+                    </Button> 
+                    : null
+                }
             </Toolbar>
         </AppBar>
     )

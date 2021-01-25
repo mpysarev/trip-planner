@@ -17,15 +17,15 @@ export const userAuth = (values, isSignIn) => async (dispatch) => {
     }
 
     const { data } = await axios.post(url, authData);
-    console.log(data);
+    // console.log(data);
 
-    const cont = {
+    const newUser = {
         userId: data.localId
     }
 
     if(!isSignIn) {
-        console.log('posting user to DB');
-        api.post(`/users/${data.localId}.json`, cont);
+        console.log('Posting user to DB');
+        api.post(`/users/${data.localId}.json`, newUser);
     }
 
     
@@ -67,6 +67,7 @@ export const signOut = () => (dispatch) => {
 
 export const autoLogin = () => (dispatch) => {
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
     // console.log(token);
 
     if(!token) {
@@ -78,7 +79,10 @@ export const autoLogin = () => (dispatch) => {
         } else {
             dispatch({
                 type: AUTH_ACTION,
-                payload: {idToken: token}
+                payload: {
+                    idToken: token, 
+                    localId: userId
+                }
             })
             autoSignOut((expirationDate.getTime() - new Date().getTime()) / 1000)
         }

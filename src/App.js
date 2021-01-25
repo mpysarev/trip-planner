@@ -33,10 +33,9 @@ const useStyles = makeStyles((theme) => ({
 function App({fetchTripsList, autoLogin, userId}) {
 
   const classes = useStyles();
-
   // const userId = localStorage.getItem('userId');
   // const token = localStorage.getItem('token');
-  console.log('user id', userId);
+  // console.log('user id', userId);
   // console.log('token', token);
 
   useEffect(() => {
@@ -62,7 +61,7 @@ function App({fetchTripsList, autoLogin, userId}) {
             <Route path="/auth" component={Auth} />
             <Route path="/location" component={Location} />
             <Route path="*">
-              <Redirect to="/trips" />
+              <Redirect to="/auth" />
             </Route>
           </Switch>
         </main>

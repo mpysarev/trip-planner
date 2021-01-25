@@ -45,7 +45,7 @@ function TripCostSummary({setTripLength, setTripCost, className}) {
 
 
     return (
-        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <TextField
             variant="outlined"
             value={tripLength}

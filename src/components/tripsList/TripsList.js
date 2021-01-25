@@ -4,22 +4,28 @@ import { connect } from 'react-redux'
 import TripsListItem from './TripsListItem'
 import Loader from '../loader/Loader'
 
-function TripsList({list}) {
-    console.log(list)
+function TripsList({list, isSignedIn}) {
+    
+    // console.log('List', list)
+    // console.log('Signed in', isSignedIn)
+
+    const newList = list.filter((item) => !item.userId);
+
+    console.log('List', newList);
+    
     return (
         <List>
-            {list.length > 0 ? list.map((trip) => 
+            {isSignedIn && newList.length > 0 ? newList.map((trip) => 
                 <TripsListItem 
                     trip={trip}
                     key={trip.id}
-                />) : <Loader />
-            }
+                />) : <Loader />}
         </List>
     )
 }
 
-function mapStateToProps ({trips: {list}}) {
-    return { list }
+function mapStateToProps ({trips: {list}, auth: {token}}) {
+    return { list, isSignedIn: !!token }
 }
 
 

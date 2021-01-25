@@ -8,7 +8,7 @@ import AddIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 function TransportCostField({name, label, className}) {
     
     return (
-        <div>
+        <>
             <FieldArray 
                 name={name}
                 label={label}
@@ -19,7 +19,7 @@ function TransportCostField({name, label, className}) {
 
                         return (
                             
-                            <>
+                            <div>
                                 {transportation.cost.map((transport, index) => (
                                     <div key={index} style={{display: 'flex', justifyContent: 'flex-end'}}>
                                         {index > 0 && name === 'transportation.cost' ? <DeleteIcon type="button" onClick={() => remove(index)} /> : null}
@@ -30,12 +30,12 @@ function TransportCostField({name, label, className}) {
                                         
                                     </div>
                                 ))}
-                            </>
+                            </div>
                         )
                     }
                 }
             </FieldArray>
-        </div>
+        </>
     )
 }
 
