@@ -1,6 +1,6 @@
-import React from 'react'
-import {FieldArray} from 'formik'
-import FormikField from './FormikField'
+import React from 'react';
+import {FieldArray} from 'formik';
+import FormikField from './FormikField';
 import DeleteIcon from '@material-ui/icons/HighlightOffOutlined';
 import AddIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
@@ -18,7 +18,6 @@ function ExtraExpensesCostField({name, label, className}) {
                         const {extraExpenses} = values;
 
                         return (
-                            
                             <div>
                                 {extraExpenses.cost.map((transport, index) => (
                                     <div key={index} style={{display: 'flex', justifyContent: 'flex-end'}}>

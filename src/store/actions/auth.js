@@ -5,42 +5,48 @@ import api from '../../axiosApi/tripsService'
 export const AUTH_ACTION = 'AUTH_ACTION'
 export const userAuth = (values, isSignIn) => async (dispatch) => {
 
-    const authData = {
-        ...values,
-        returnSecureToken: true
-    }
+    try {
 
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`
-
-    if (isSignIn) {
-        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`
-    }
-
-    const { data } = await axios.post(url, authData);
-    // console.log(data);
-
-    const newUser = {
-        userId: data.localId
-    }
-
-    if(!isSignIn) {
-        console.log('Posting user to DB');
-        api.post(`/users/${data.localId}.json`, newUser);
-    }
-
+        const authData = {
+            ...values,
+            returnSecureToken: true
+        }
     
-    const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+        let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`
     
-    localStorage.setItem('token', data.idToken);
-    localStorage.setItem('userId', data.localId);
-    localStorage.setItem('expirationDate', expirationDate);
+        if (isSignIn) {
+            url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`
+        }
     
-    dispatch({
-        type: AUTH_ACTION,
-        payload: data
-    })
+        const { data } = await axios.post(url, authData);
+        // console.log(data);
     
-    autoSignOut(data.expiresIn);
+        const newUser = {
+            userId: data.localId
+        }
+    
+        if(!isSignIn) {
+            console.log('Posting user to DB');
+            api.post(`/users/${data.localId}.json`, newUser);
+        }
+    
+        
+        const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+        
+        localStorage.setItem('token', data.idToken);
+        localStorage.setItem('userId', data.localId);
+        localStorage.setItem('expirationDate', expirationDate);
+        
+        dispatch({
+            type: AUTH_ACTION,
+            payload: data
+        })
+        
+        autoSignOut(data.expiresIn);
+    } catch (err) {
+        console.warn('Auth failure', err);
+        alert(`Sign in failed! Wrong email or password.`)
+    }
     
 }
 

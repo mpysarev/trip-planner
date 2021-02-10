@@ -10,12 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import FormikField from './FormikField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import * as yup from 'yup';
-
-import FormikField from './FormikField'
-
 
 import TripCostSummaryFields from './TripCostSummaryFields'
 import TransportTypeField from './TransportTypeField'
@@ -29,18 +27,18 @@ import {saveTrip, deleteTrip} from '../../store/actions/trips'
 const useStyles = makeStyles((theme) => ({
     container: {
         paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
+        paddingBottom: theme.spacing(2)
     },
     paper: {
         width: '100%',
         padding: theme.spacing(2),
         display: 'flex',
         overflow: 'auto',
-        flexDirection: 'column',
+        flexDirection: 'column'
     },
     fieldsContainer: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     content: {
         padding: '40px 200px'
@@ -68,22 +66,16 @@ function TripForm({trip,
                    saveTrip, 
                    deleteTrip,
                    }) {
-
     
     const classes = useStyles();
     const history = useHistory();
 
-
-    
     const onSubmit = (values) => {
 
         const userId = localStorage.getItem('userId');
         
         saveTrip(values, tripLength, tripCost, userId);
-        
-        // console.log('Form submitted', tripLength, tripCost)
-        // console.log('user Id', userId);
-        
+                
         history.push('/trips')
     }
 

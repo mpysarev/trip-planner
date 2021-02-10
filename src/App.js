@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './components/header/Header';
 import TripForm from './components/tripForm/TripForm';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {fetchTripsList} from './store/actions/trips'
-import {autoLogin} from './store/actions/auth'
 
 import {BrowserRouter as Router,
-        Redirect,
-        Route,
-        Switch
+  Redirect,
+  Route,
+  Switch
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+
 import TripsList from './components/tripsList/TripsList';
 import Location from './components/location/Location'
 import Auth from './components/auth/Auth';
+import {fetchTripsList} from './store/actions/trips'
+import {autoLogin} from './store/actions/auth'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,16 +29,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     backgroundColor: '#36669d',
     backgroundImage: `linear-gradient(315deg, #36669d 0%, #d3d3d3 74%)`
-},
+  },
 }))
 
 function App({fetchTripsList, autoLogin, userId}) {
 
   const classes = useStyles();
-  // const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('token');
-  // console.log('user id', userId);
-  // console.log('token', token);
 
   useEffect(() => {
     fetchTripsList(userId)
@@ -45,7 +43,6 @@ function App({fetchTripsList, autoLogin, userId}) {
   useEffect(() => {
     autoLogin()
   }, [autoLogin])
-
 
   return (
     <Router>
@@ -74,7 +71,6 @@ function mapStateToProps({auth: {userId}}) {
 
   return {userId}
 }
-
 
 const mapDispatchToProps = {
   fetchTripsList,

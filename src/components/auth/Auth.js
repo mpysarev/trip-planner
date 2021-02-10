@@ -1,16 +1,17 @@
-import React from 'react'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter, useHistory } from 'react-router-dom';
+import {Formik, Form, ErrorMessage } from 'formik';
+import {userAuth} from '../../store/actions/auth'
+
+import FormikField from '../tripForm/FormikField';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {Formik, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup';
-import FormikField from '../tripForm/FormikField';
-import { connect } from 'react-redux';
-import {userAuth} from '../../store/actions/auth'
-import { withRouter, useHistory } from 'react-router-dom';
 
 
 
@@ -34,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
     },
     summaryField: {
         width: '150px'
-    },
-    button: {
-        marginRight: 10
     }
 }))
 
@@ -52,11 +50,7 @@ function Auth({userAuth, auth}) {
     const classes = useStyles();
     const history = useHistory()
 
-    // console.log(auth);
-
-
     const onSubmit = (values, {resetForm}) => {
-
         userAuth(values, true);
         resetForm({email: '', password: ''});
         history.push('/trips')
@@ -95,7 +89,6 @@ function Auth({userAuth, auth}) {
                         {formik => {
                             
                             return (
-
                                 <Form autoComplete="off">
                                     <Grid container spacing={3} direction="column">
                                         <Grid item xs={12}>
@@ -117,28 +110,24 @@ function Auth({userAuth, auth}) {
                                         </Grid>
                                         <Grid item>
                                             <Button
+                                                type="button"
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => handleSignUp(formik)}
+                                                disabled={!formik.isValid}
+                                            >Create account
+                                            </Button>
+                                        </Grid>
+                                        <Typography variant="button" display="block">OR</Typography>
+                                        <Grid item>
+                                            <Button
                                                 type="submit"
                                                 variant="contained"
                                                 color="secondary"
-                                                className={classes.button}
                                                 disabled={!formik.isValid}
                                             >Sign In
-                                        </Button>
-
+                                            </Button>
                                         </Grid>
-                                        <Grid item>
-                                            <Typography>
-                                                Still no account? Click to
-                                                <Button
-                                                    type="button"
-                                                    color="primary"
-                                                    onClick={() => handleSignUp(formik)}
-                                                    disabled={!formik.isValid}
-                                                >Sign Up
-                                                </Button>
-                                            </Typography>
-                                        </Grid>
-
                                     </Grid>
                                 </Form>
                             )
@@ -151,7 +140,6 @@ function Auth({userAuth, auth}) {
 }
 
 function mapStateToProps({auth}) {
-
     return {auth};
 }
 

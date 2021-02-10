@@ -1,6 +1,6 @@
-import React from 'react'
-import {FieldArray} from 'formik'
-import FormikField from './FormikField'
+import React from 'react';
+import {FieldArray} from 'formik';
+import FormikField from './FormikField';
 import DeleteIcon from '@material-ui/icons/HighlightOffOutlined';
 import AddIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
@@ -16,8 +16,6 @@ function TransportTypeField({name, label, className}) {
                 {(props) => {
                         const {push, remove, form: {values}} = props;
                         const {transportation} = values;
-
-                        // console.log(transportation);
 
                         return (
                             

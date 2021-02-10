@@ -1,16 +1,12 @@
-import React from 'react'
+import React from 'react';
 import List from '@material-ui/core/List';
-import { connect } from 'react-redux'
-import TripsListItem from './TripsListItem'
-import Loader from '../loader/Loader'
+import { connect } from 'react-redux';
+import TripsListItem from './TripsListItem';
+import Loader from '../loader/Loader';
 
 function TripsList({list, isSignedIn}) {
     
-    // console.log('List', list)
-    // console.log('Signed in', isSignedIn)
-
     const newList = list.filter((item) => !item.userId);
-
     console.log('List', newList);
     
     return (

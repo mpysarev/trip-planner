@@ -4,7 +4,6 @@ import { NavLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TripIcon from '@material-ui/icons/Train';
 import ListItemText from '@material-ui/core/ListItemText';
-// import DeleteIcon from '@material-ui/icons/BackspaceOutlined';
 
 const useStyles = makeStyles({
     root: {
@@ -21,19 +20,17 @@ const useStyles = makeStyles({
 
 function TripsListItem({trip: {destination, dates, id, tripCost, tripLength}}) {
 
-  
-
   const classes = useStyles();
 
   return (
-      <ListItem button className={classes.root} component={NavLink} to={`/form/${id}`}>
-        <TripIcon />
-        <ListItemText primary={destination} className={classes.itemText}/>
-        <ListItemText primary={dates.start} className={classes.itemText}/>
-        <ListItemText primary={dates.end} className={classes.itemText}/>
-        <ListItemText primary={`${tripLength} days`} className={classes.itemText}/>
-        <ListItemText primary={`${tripCost}$`} className={classes.itemText}/>
-      </ListItem>
+    <ListItem button className={classes.root} component={NavLink} to={`/form/${id}`}>
+      <TripIcon />
+      <ListItemText primary={destination} className={classes.itemText}/>
+      <ListItemText primary={dates.start} className={classes.itemText}/>
+      <ListItemText primary={dates.end} className={classes.itemText}/>
+      <ListItemText primary={`${tripLength} days`} className={classes.itemText}/>
+      <ListItemText primary={`${tripCost}$`} className={classes.itemText}/>
+    </ListItem>
   )
 }
 

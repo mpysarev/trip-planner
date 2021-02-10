@@ -1,6 +1,6 @@
-import React from 'react'
-import {FieldArray} from 'formik'
-import FormikField from './FormikField'
+import React from 'react';
+import {FieldArray} from 'formik';
+import FormikField from './FormikField';
 import DeleteIcon from '@material-ui/icons/HighlightOffOutlined';
 import AddIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
